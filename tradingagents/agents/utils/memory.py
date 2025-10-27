@@ -1,3 +1,5 @@
+import os
+
 import chromadb
 from chromadb.config import Settings
 from openai import OpenAI
@@ -8,16 +10,18 @@ class FinancialSituationMemory:
         if config["backend_url"] == "http://localhost:11434/v1":
             self.embedding = "nomic-embed-text"
         else:
-            self.embedding = "text-embedding-3-small"
-        self.client = OpenAI(base_url=config["backend_url"])
+            self.embedding = "text-embedding-v4"
+        self.client = OpenAI(base_url="https://dashscope.aliyuncs.com/compatible-mode/v1"
+                             , api_key=os.getenv("QWEN_API_KEY"))
         self.chroma_client = chromadb.Client(Settings(allow_reset=True))
         self.situation_collection = self.chroma_client.create_collection(name=name)
 
     def get_embedding(self, text):
         """Get OpenAI embedding for a text"""
-        
+
         response = self.client.embeddings.create(
-            model=self.embedding, input=text
+            model=self.embedding, input=text,
+            dimensions=2048, encoding_format="float"
         )
         return response.data[0].embedding
 

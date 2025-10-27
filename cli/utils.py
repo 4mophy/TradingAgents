@@ -152,7 +152,16 @@ def select_shallow_thinking_agent(provider) -> str:
         "ollama": [
             ("llama3.1 local", "llama3.1"),
             ("llama3.2 local", "llama3.2"),
-        ]
+        ],
+        "deepseek": [
+            ("DeepSeek-V3.2-Exp:Free - 轻量快速，输出自然流畅，适合日常对话、创作与即时问答。", "deepseek-chat"),
+        ],
+        "kimi": [
+            ("Kimi-K2-Turbo-Preview - 响应迅速、语言自然，适用于聊天、创作及高频交互场景。", "kimi-k2-turbo-preview"),
+        ],
+        "qwen": [
+            ("Qwen3-Max - 通义千问3系列Max模型，达到领域SOTA水平，适配场景更加复杂的智能体需求。", "qwen3-max"),
+        ],
     }
 
     choice = questionary.select(
@@ -214,7 +223,16 @@ def select_deep_thinking_agent(provider) -> str:
         "ollama": [
             ("llama3.1 local", "llama3.1"),
             ("qwen3", "qwen3"),
-        ]
+        ],
+        "deepseek": [
+            ("DeepSeek-V3.2-Exp:Think - 强化多步推理与复杂语境理解，适合分析、推理、长文档总结等深度任务。", "deepseek-reasoner"),
+        ],
+        "kimi": [
+            ("Kimi-Thinking-Preview - 专注深度推理与上下文连贯性，适合复杂问题分析、代码解释与逻辑性强的任务。", "kimi-thinking-preview"),
+        ],
+        "qwen": [
+            ("Qwen-Plus - Qwen3系列Plus模型，推理能力显著超过QwQ、通用能力显著超过Qwen2.5-Plus，达到同规模业界SOTA水平。", "qwen-plus"),
+        ],
     }
     
     choice = questionary.select(
@@ -247,7 +265,10 @@ def select_llm_provider() -> tuple[str, str]:
         ("Anthropic", "https://api.anthropic.com/"),
         ("Google", "https://generativelanguage.googleapis.com/v1"),
         ("Openrouter", "https://openrouter.ai/api/v1"),
-        ("Ollama", "http://localhost:11434/v1"),        
+        ("Ollama", "http://localhost:11434/v1"),
+        ("Deepseek", "https://api.deepseek.com/v1"),
+        ("Kimi", "https://api.moonshot.cn/v1"),
+        ("Qwen", "https://dashscope.aliyuncs.com/compatible-mode/v1"),
     ]
     
     choice = questionary.select(
