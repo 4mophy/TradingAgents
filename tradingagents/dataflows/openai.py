@@ -14,7 +14,7 @@ def get_stock_news_openai(query, start_date, end_date):
                 "content": [
                     {
                         "type": "input_text",
-                        "text": f"Can you search Social Media for {query} from {start_date} to {end_date}? Make sure you only get the data posted during that period.",
+                        "text": f"请搜索关于 {query} 的社交媒体内容，时间范围从 {start_date} 到 {end_date}。确保只获取该时间段内发布的数据。",
                     }
                 ],
             }
@@ -49,7 +49,7 @@ def get_global_news_openai(curr_date, look_back_days=7, limit=5):
                 "content": [
                     {
                         "type": "input_text",
-                        "text": f"Can you search global or macroeconomics news from {look_back_days} days before {curr_date} to {curr_date} that would be informative for trading purposes? Make sure you only get the data posted during that period. Limit the results to {limit} articles.",
+                        "text": f"请搜索从 {curr_date} 前 {look_back_days} 天到 {curr_date} 期间的全球或宏观经济新闻，这些新闻对交易目的有参考价值。确保只获取该时间段内发布的数据。将结果限制在 {limit} 篇文章。",
                     }
                 ],
             }
@@ -84,7 +84,7 @@ def get_fundamentals_openai(ticker, curr_date):
                 "content": [
                     {
                         "type": "input_text",
-                        "text": f"Can you search Fundamental for discussions on {ticker} during of the month before {curr_date} to the month of {curr_date}. Make sure you only get the data posted during that period. List as a table, with PE/PS/Cash flow/ etc",
+                        "text": f"请搜索关于 {ticker} 的基本面讨论，时间范围从 {curr_date} 前一个月到 {curr_date} 当月。确保只获取该时间段内发布的数据。以表格形式列出，包括市盈率(PE)、市销率(PS)、现金流等指标。",
                     }
                 ],
             }
