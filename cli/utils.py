@@ -229,6 +229,7 @@ def select_deep_thinking_agent(provider) -> str:
         ],
         "kimi": [
             ("Kimi-Thinking-Preview - 专注深度推理与上下文连贯性，适合复杂问题分析、代码解释与逻辑性强的任务。", "kimi-thinking-preview"),
+            ("Kimi-K2-Thinking-Turbo - kimi-k2-thinking 模型的高速版，适用于需要深度推理和追求极致高速的场景。", "kimi-k2-thinking-turbo"),
         ],
         "qwen": [
             ("Qwen-Plus - Qwen3系列Plus模型，推理能力显著超过QwQ、通用能力显著超过Qwen2.5-Plus，达到同规模业界SOTA水平。", "qwen-plus"),
