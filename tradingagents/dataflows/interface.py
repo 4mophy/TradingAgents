@@ -23,6 +23,12 @@ from .akshare_data import (
     get_stock_financial_report as get_akshare_financial_report,
     get_index_data as get_akshare_index
 )
+from .market_detector import (
+    detect_market,
+    get_recommended_vendor,
+    get_vendor_with_fallback,
+    get_market_display_name
+)
 
 # Configuration and routing logic
 from .config import get_config
@@ -162,9 +168,39 @@ def get_vendor(category: str, method: str = None) -> str:
     return config.get("data_vendors", {}).get(category, "default")
 
 def route_to_vendor(method: str, *args, **kwargs):
-    """Route method calls to appropriate vendor implementation with fallback support."""
+    """Route method calls to appropriate vendor implementation with fallback support.
+
+    Supports intelligent market detection for stock data:
+    - If vendor_config is "auto", automatically detects market and selects best vendor
+    - For get_stock_data with symbol parameter, can use smart routing
+    """
     category = get_category_for_method(method)
     vendor_config = get_vendor(category, method)
+
+    # Track if smart routing was used
+    smart_routing_enabled = False
+
+    # Smart market detection for stock data
+    if method == "get_stock_data" and (vendor_config == "auto" or vendor_config.startswith("auto")):
+        smart_routing_enabled = True
+
+        # Extract symbol from args or kwargs
+        symbol = None
+        if args and len(args) > 0:
+            symbol = args[0]
+        elif 'symbol' in kwargs:
+            symbol = kwargs['symbol']
+
+        if symbol:
+            # Detect market and get recommended vendor chain
+            market = detect_market(symbol)
+            vendor_config = get_vendor_with_fallback(symbol)
+            market_name = get_market_display_name(market)
+            print(f"SMART_ROUTING: Detected '{symbol}' as {market_name}, using vendor chain: {vendor_config}")
+        else:
+            # No symbol found, fall back to default
+            print(f"WARNING: Auto routing enabled but no symbol found, using default vendors")
+            vendor_config = "yfinance,akshare,alpha_vantage"
 
     # Handle comma-separated vendors
     primary_vendors = [v.strip() for v in vendor_config.split(',')]
@@ -174,7 +210,7 @@ def route_to_vendor(method: str, *args, **kwargs):
 
     # Get all available vendors for this method for fallback
     all_available_vendors = list(VENDOR_METHODS[method].keys())
-    
+
     # Create fallback vendor list: primary vendors first, then remaining vendors as fallbacks
     fallback_vendors = primary_vendors.copy()
     for vendor in all_available_vendors:
@@ -243,11 +279,14 @@ def route_to_vendor(method: str, *args, **kwargs):
             successful_vendor = vendor
             result_summary = f"Got {len(vendor_results)} result(s)"
             print(f"SUCCESS: Vendor '{vendor}' succeeded - {result_summary}")
-            
-            # Stopping logic: Stop after first successful vendor for single-vendor configs
-            # Multiple vendor configs (comma-separated) may want to collect from multiple sources
-            if len(primary_vendors) == 1:
-                print(f"DEBUG: Stopping after successful vendor '{vendor}' (single-vendor config)")
+
+            # Stopping logic:
+            # 1. Stop after first successful vendor for single-vendor configs
+            # 2. Stop after first successful vendor for smart routing (auto mode)
+            # 3. Multiple vendor configs (comma-separated) may want to collect from multiple sources
+            if len(primary_vendors) == 1 or smart_routing_enabled:
+                stop_reason = "single-vendor config" if len(primary_vendors) == 1 else "smart routing mode"
+                print(f"DEBUG: Stopping after successful vendor '{vendor}' ({stop_reason})")
                 break
         else:
             print(f"FAILED: Vendor '{vendor}' produced no results")
