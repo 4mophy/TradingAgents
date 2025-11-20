@@ -1,6 +1,7 @@
 from langchain_core.messages import AIMessage
 import time
 import json
+from tradingagents.utils.language import get_language_instruction
 
 
 def create_bear_researcher(llm, memory):
@@ -42,7 +43,7 @@ def create_bear_researcher(llm, memory):
 上一个多头论点：{current_response}
 类似情况的反思和经验教训：{past_memory_str}
 使用这些信息提供一个有说服力的空头论点，驳斥多头的主张，并参与动态辩论，展示投资该股票的风险和弱点。你还必须解决反思并从过去的经验教训和错误中学习。
-"""
+""" + get_language_instruction()
 
         response = llm.invoke(prompt)
 

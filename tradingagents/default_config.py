@@ -1,4 +1,27 @@
 import os
+import locale
+
+
+def _detect_system_language():
+    """Detect system language and return appropriate language code.
+
+    Returns:
+        str: 'zh' for Chinese systems, 'en' for others
+    """
+    try:
+        # Try to get system locale using the recommended method
+        system_locale = locale.getlocale()[0]
+        if system_locale:
+            # Check if it's a Chinese locale (zh_CN, zh_TW, zh_HK, etc.)
+            if system_locale.lower().startswith('zh'):
+                return 'zh'
+    except Exception:
+        # If locale detection fails, fall back to 'en'
+        pass
+
+    # Default to English for non-Chinese systems or if detection fails
+    return 'en'
+
 
 DEFAULT_CONFIG = {
     "project_dir": os.path.abspath(os.path.join(os.path.dirname(__file__), ".")),
@@ -17,6 +40,8 @@ DEFAULT_CONFIG = {
     "max_debate_rounds": 1,
     "max_risk_discuss_rounds": 1,
     "max_recur_limit": 100,
+    # Language settings (auto-detected from system locale, can be overridden by TRADINGAGENTS_LANGUAGE env var)
+    "language": os.getenv("TRADINGAGENTS_LANGUAGE", _detect_system_language()),  # Options: zh (Chinese), en (English)
     # Data vendor configuration
     # Category-level configuration (default for all tools in category)
     "data_vendors": {

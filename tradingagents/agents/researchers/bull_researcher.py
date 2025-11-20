@@ -1,6 +1,7 @@
 from langchain_core.messages import AIMessage
 import time
 import json
+from tradingagents.utils.language import get_language_instruction
 
 
 def create_bull_researcher(llm, memory):
@@ -40,7 +41,7 @@ def create_bull_researcher(llm, memory):
 上一个空头论点：{current_response}
 类似情况的反思和经验教训：{past_memory_str}
 使用这些信息提供一个有说服力的多头论点，驳斥空头的关注点，并参与动态辩论，展示多头立场的优势。你还必须解决反思并从过去的经验教训和错误中学习。
-"""
+""" + get_language_instruction()
 
         response = llm.invoke(prompt)
 

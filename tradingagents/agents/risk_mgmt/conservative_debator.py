@@ -1,6 +1,7 @@
 from langchain_core.messages import AIMessage
 import time
 import json
+from tradingagents.utils.language import get_language_instruction
 
 
 def create_safe_debator(llm):
@@ -31,7 +32,7 @@ def create_safe_debator(llm):
 公司基本面报告：{fundamentals_report}
 以下是当前对话历史：{history} 以下是激进型分析师的最后回应：{current_risky_response} 以下是中立型分析师的最后回应：{current_neutral_response}。如果其他观点没有回应，不要臆造，只需陈述你的观点。
 
-通过质疑他们的乐观情绪并强调他们可能忽视的潜在不利因素来参与。解决他们的每个反驳点，以展示为什么保守立场最终是公司资产最安全的道路。专注于辩论和批评他们的论点，以展示低风险策略相对于他们的方法的优势。以对话方式输出，就像你在说话一样，不需要任何特殊格式。"""
+通过质疑他们的乐观情绪并强调他们可能忽视的潜在不利因素来参与。解决他们的每个反驳点，以展示为什么保守立场最终是公司资产最安全的道路。专注于辩论和批评他们的论点，以展示低风险策略相对于他们的方法的优势。以对话方式输出，就像你在说话一样，不需要任何特殊格式。""" + get_language_instruction()
 
         response = llm.invoke(prompt)
 
