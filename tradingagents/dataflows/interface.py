@@ -16,6 +16,13 @@ from .alpha_vantage import (
     get_news as get_alpha_vantage_news
 )
 from .alpha_vantage_common import AlphaVantageRateLimitError
+from .akshare_data import (
+    get_stock_data as get_akshare_stock,
+    get_fund_data as get_akshare_fund,
+    get_stock_info as get_akshare_stock_info,
+    get_stock_financial_report as get_akshare_financial_report,
+    get_index_data as get_akshare_index
+)
 
 # Configuration and routing logic
 from .config import get_config
@@ -51,12 +58,20 @@ TOOLS_CATEGORIES = {
             "get_insider_sentiment",
             "get_insider_transactions",
         ]
+    },
+    "fund_data": {
+        "description": "Fund data and information",
+        "tools": [
+            "get_fund_data",
+            "get_index_data"
+        ]
     }
 }
 
 VENDOR_LIST = [
     "local",
     "yfinance",
+    "akshare",
     "openai",
     "google"
 ]
@@ -67,6 +82,7 @@ VENDOR_METHODS = {
     "get_stock_data": {
         "alpha_vantage": get_alpha_vantage_stock,
         "yfinance": get_YFin_data_online,
+        "akshare": get_akshare_stock,
         "local": get_YFin_data,
     },
     # technical_indicators
@@ -113,6 +129,13 @@ VENDOR_METHODS = {
         "alpha_vantage": get_alpha_vantage_insider_transactions,
         "yfinance": get_yfinance_insider_transactions,
         "local": get_finnhub_company_insider_transactions,
+    },
+    # fund_data
+    "get_fund_data": {
+        "akshare": get_akshare_fund,
+    },
+    "get_index_data": {
+        "akshare": get_akshare_index,
     },
 }
 
