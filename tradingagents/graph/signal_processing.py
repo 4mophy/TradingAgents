@@ -1,6 +1,7 @@
 # TradingAgents/graph/signal_processing.py
 
 from langchain_openai import ChatOpenAI
+from tradingagents.utils.language import get_language_instruction
 
 
 class SignalProcessor:
@@ -23,7 +24,8 @@ class SignalProcessor:
         messages = [
             (
                 "system",
-                "你是一名高效的助手，专门分析分析师团队提供的段落或金融报告。你的任务是提取投资决策：卖出 (SELL)、买入 (BUY) 或持有 (HOLD)。仅输出提取的决策（SELL、BUY 或 HOLD），不要添加任何额外的文本或信息。",
+                "你是一名高效的助手，专门分析分析师团队提供的段落或金融报告。你的任务是提取投资决策：卖出 (SELL)、买入 (BUY) 或持有 (HOLD)。仅输出提取的决策（SELL、BUY 或 HOLD），不要添加任何额外的文本或信息。"
+                + get_language_instruction(),
             ),
             ("human", full_signal),
         ]

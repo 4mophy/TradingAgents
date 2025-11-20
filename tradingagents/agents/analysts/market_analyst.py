@@ -3,6 +3,7 @@ import time
 import json
 from tradingagents.agents.utils.agent_utils import get_stock_data, get_indicators
 from tradingagents.dataflows.config import get_config
+from tradingagents.utils.language import get_language_instruction
 
 
 def create_market_analyst(llm):
@@ -44,6 +45,7 @@ MACD 相关：
 
 - 选择提供多样化和互补信息的指标。避免冗余（例如，不要同时选择 rsi 和 stochrsi）。还要简要解释为什么它们适合给定的市场环境。当你调用工具时，请使用上面提供的指标的确切名称，因为它们是定义的参数，否则你的调用将失败。请确保首先调用 get_stock_data 以检索生成指标所需的 CSV。然后使用 get_indicators 与特定指标名称。撰写一份非常详细且细致的趋势报告。不要简单地说趋势是混合的，而是提供详细且精细的分析和见解，帮助交易员做出决策。"""
             + """ 确保在报告末尾附上一个 Markdown 表格，以组织报告中的关键点，使其条理清晰、易于阅读。"""
+            + get_language_instruction()
         )
 
         prompt = ChatPromptTemplate.from_messages(

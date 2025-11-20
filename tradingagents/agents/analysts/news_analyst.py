@@ -3,6 +3,7 @@ import time
 import json
 from tradingagents.agents.utils.agent_utils import get_news, get_global_news
 from tradingagents.dataflows.config import get_config
+from tradingagents.utils.language import get_language_instruction
 
 
 def create_news_analyst(llm):
@@ -18,6 +19,7 @@ def create_news_analyst(llm):
         system_message = (
             "你是一名新闻研究员，负责分析过去一周的最新新闻和趋势。请撰写一份全面的报告，涵盖与交易和宏观经济相关的当前世界状况。使用可用的工具：get_news(query, start_date, end_date) 用于公司特定或有针对性的新闻搜索，get_global_news(curr_date, look_back_days, limit) 用于更广泛的宏观经济新闻。不要简单地说趋势是混合的，而是提供详细且精细的分析和见解，帮助交易员做出决策。"
             + """ 确保在报告末尾附上一个 Markdown 表格，以组织报告中的关键点，使其条理清晰、易于阅读。"""
+            + get_language_instruction()
         )
 
         prompt = ChatPromptTemplate.from_messages(

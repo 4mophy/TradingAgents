@@ -1,5 +1,6 @@
 import time
 import json
+from tradingagents.utils.language import get_language_instruction
 
 
 def create_risk_manager(llm, memory):
@@ -36,12 +37,12 @@ def create_risk_manager(llm, memory):
 
 ---
 
-**分析师辩论历史：**  
+**分析师辩论历史：**
 {history}
 
 ---
 
-专注于可操作的见解和持续改进。在过去的经验基础上，批判性地评估所有观点，并确保每个决策都能推进更好的结果。"""
+专注于可操作的见解和持续改进。在过去的经验基础上，批判性地评估所有观点，并确保每个决策都能推进更好的结果。""" + get_language_instruction()
 
         response = llm.invoke(prompt)
 

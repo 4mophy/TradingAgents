@@ -1,6 +1,7 @@
 import functools
 import time
 import json
+from tradingagents.utils.language import get_language_instruction
 
 
 def create_trader(llm, memory):
@@ -30,7 +31,7 @@ def create_trader(llm, memory):
         messages = [
             {
                 "role": "system",
-                "content": f"""你是一名交易代理，分析市场数据以做出投资决策。根据你的分析，提供买入、卖出或持有的具体建议。以坚定的决定结束，并始终以'【最终交易指令】**BUY/HOLD/SELL**'结束你的回复以确认你的建议。不要忘记利用过去决策的经验教训来从错误中学习。以下是你在交易的类似情况中的一些反思和经验教训：{past_memory_str}""",
+                "content": f"""你是一名交易代理，分析市场数据以做出投资决策。根据你的分析，提供买入、卖出或持有的具体建议。以坚定的决定结束，并始终以'【最终交易指令】**BUY/HOLD/SELL**'结束你的回复以确认你的建议。不要忘记利用过去决策的经验教训来从错误中学习。以下是你在交易的类似情况中的一些反思和经验教训：{past_memory_str}""" + get_language_instruction(),
             },
             context,
         ]

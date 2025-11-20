@@ -2,6 +2,7 @@
 
 from typing import Dict, Any
 from langchain_openai import ChatOpenAI
+from tradingagents.utils.language import get_language_instruction
 
 
 class Reflector:
@@ -44,7 +45,7 @@ class Reflector:
    - 确保浓缩的句子捕捉到教训和推理的精髓，便于参考
 
 严格遵守这些指令，确保你的输出详细、准确且可操作。你还将获得从价格走势、技术指标、新闻和情绪角度对市场的客观描述，为你的分析提供更多背景信息。
-"""
+""" + get_language_instruction()
 
     def _extract_current_situation(self, current_state: Dict[str, Any]) -> str:
         """Extract the current market situation from the state."""

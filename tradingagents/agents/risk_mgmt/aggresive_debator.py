@@ -1,5 +1,6 @@
 import time
 import json
+from tradingagents.utils.language import get_language_instruction
 
 
 def create_risky_debator(llm):
@@ -30,7 +31,7 @@ def create_risky_debator(llm):
 公司基本面报告：{fundamentals_report}
 以下是当前对话历史：{history} 以下是保守型分析师的最后论点：{current_safe_response} 以下是中立型分析师的最后论点：{current_neutral_response}。如果其他观点没有回应，不要臆造，只需陈述你的观点。
 
-积极参与，解决提出的任何具体关注点，驳斥他们逻辑中的弱点，并主张冒险的好处以超越市场规范。专注于辩论和说服，而不仅仅是呈现数据。挑战每个反驳点，以强调为什么高风险方法是最优的。以对话方式输出，就像你在说话一样，不需要任何特殊格式。"""
+积极参与，解决提出的任何具体关注点，驳斥他们逻辑中的弱点，并主张冒险的好处以超越市场规范。专注于辩论和说服，而不仅仅是呈现数据。挑战每个反驳点，以强调为什么高风险方法是最优的。以对话方式输出，就像你在说话一样，不需要任何特殊格式。""" + get_language_instruction()
 
         response = llm.invoke(prompt)
 
