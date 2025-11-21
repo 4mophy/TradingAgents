@@ -40,8 +40,8 @@ DEFAULT_CONFIG = {
     "max_debate_rounds": 1,
     "max_risk_discuss_rounds": 1,
     "max_recur_limit": 100,
-    # Language settings (auto-detected from system locale, can be overridden by TRADINGAGENTS_LANGUAGE env var)
-    "language": os.getenv("TRADINGAGENTS_LANGUAGE", _detect_system_language()),  # Options: zh (Chinese), en (English)
+    # Language settings (default to Chinese, can be overridden by TRADINGAGENTS_LANGUAGE env var)
+    "language": os.getenv("TRADINGAGENTS_LANGUAGE", "zh"),  # Options: zh (Chinese), en (English)
     # Data vendor configuration
     # Category-level configuration (default for all tools in category)
     "data_vendors": {

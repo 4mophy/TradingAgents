@@ -19,6 +19,10 @@ from tradingagents.agents.utils.news_data_tools import (
     get_insider_transactions,
     get_global_news
 )
+from tradingagents.agents.utils.fund_data_tools import (
+    get_fund_data,
+    get_index_data
+)
 
 def create_msg_delete():
     def delete_messages(state):
